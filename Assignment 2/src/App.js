@@ -1,34 +1,25 @@
-import React from 'react';
-import {Switch,Route} from "react-router-dom";
-import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "./components/Navbar";
-import ProductList from "./components/ProductList";
-import Details from "./components/Details";
-import Cart from "./components/Cart";
-import Default from "./components/Default";
-import Modal from './components/Modal';
-import { ThemeConsumer } from './components/context/ThemeContexts'
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/navbar";
+import { Shop } from "./pages/shop/shop";
+import { Contact } from "./pages/contact";
+import { Cart } from "./pages/cart/cart";
+import { ShopContextProvider } from "./context/shop-context";
 
 function App() {
   return (
-    <ThemeConsumer>
-    {({ theme }) => (
-    <React.Fragment>
-      <div className={theme? 'h-fit bg-slate-900' : 'h-fit'}>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={ProductList} />
-        <Route path="/details" component={Details} />
-        <Route path="/cart" component={Cart} />
-        <Route component={Default} />
-      </Switch>
-      <Modal />
-        </div>
-     
-    </React.Fragment>
-       )}
-       </ThemeConsumer>
+    <div className="App">
+      <ShopContextProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Shop />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </Router>
+      </ShopContextProvider>
+    </div>
   );
 }
 
